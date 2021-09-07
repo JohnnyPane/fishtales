@@ -1,38 +1,67 @@
-.App {
-  text-align: center;
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.credential-box {
+    width: 100%;
+    background: rgb(255, 255, 255);
+    box-shadow: rgb(0 0 0 / 5%) 0px 3px 15px 0px;
+    border-radius: 10px;
+    max-width: 500px;
+    padding: 40px 50px !important;
+    position: relative;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.credential-input {
+    height: 44px;
+    border: 1px solid rgb(204, 207, 207);
+    padding: 0px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    color: rgb(25, 25, 25);
+    width: 100%;
+    transition: border-color 250ms ease-in-out 0s;
+    line-height: 1.5;
+    box-sizing: border-box;
+    appearance: none;
+    margin-bottom: 20px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.credenitial-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.57;
+  color: rgb(25, 25, 25);
+  margin-bottom: 8px;
+}
+
+.credential-button-wrapper {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex-direction: column;
 }
 
-.App-link {
-  color: #61dafb;
+.submit-credential-button {
+  height: 44px;
+  padding: 0px 24px;
+  border-radius: 100px;
+  background: #38A700;
+  color: rgb(255, 255, 255);
+  letter-spacing: normal;
+  font-size: 14px;
+  font-weight: 600;
+  position: relative;
+  cursor: pointer;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.credential-reroute {
+  text-decoration: none;
+  color: #38A700;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 20px;
 }

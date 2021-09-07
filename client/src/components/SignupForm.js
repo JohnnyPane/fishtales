@@ -1,5 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom"
+import Box from "@material-ui/core/Container";
+import { borders, palette, sizing, spacing } from "@material-ui/system";
+
 
 const SignupForm = ({
   handleSubmit,
@@ -11,40 +14,51 @@ const SignupForm = ({
   email
 }) => {
   return (
-    <div className="credential-box">
+    <Box className="credential-box" maxWidth="500px" px="50px">
       <form onSubmit={handleSubmit}>
         <div>
-          username
+          <div className="credenitial-label">username</div>
           <input
             type="text"
             value={username}
             name="Username"
             onChange={handleUsernameChange}
+            placeholder="e.g. JackSparrow"
+            className="credential-input"
           />
         </div>
         <div>
-          email
+          <div className="credenitial-label">email</div>
           <input
             type="email"
             value={email}
             name="Email"
             onChange={handleEmailChange}
+            placeholder="pirate@theBlackPearl.com"
+            className="credential-input"
           />
         </div>
         <div>
-          password
+          <div className="credenitial-label">password</div>
           <input
             type="password"
             value={password}
             name="Password"
             onChange={handlePasswordChange}
+            placeholder="*******"
+            className="credential-input"
           />
         </div>
-        <button type="submit">sign up</button>
+        <div className="credential-button-wrapper">
+          <button type="submit" className="submit-credential-button">
+            sign up
+          </button>
+          <Link to="/" className="credential-reroute">
+            Already Have An Account?
+          </Link>
+        </div>
       </form>
-
-      <Link to="/">Or log in if you already have an account</Link>
-    </div>
+    </Box>
   );
 };
 

@@ -94,6 +94,9 @@ const App = () => {
     window.localStorage.removeItem("currentUser");
     setUser(null)
     setUserId("")
+    setUsername("");
+    setPassword("");
+    setEmail("");
   }
 
   const loginForm = () => (
@@ -118,13 +121,15 @@ const App = () => {
 
   return (
     <div>
-      <div>
-        <Link to="/">home</Link>
-        <Link to="/fish">fish</Link>
-        <Link to="/" onClick={handleLogout}>logout</Link>
-        {/* <Link to="/users">users</Link> */}
-      </div>
-
+      
+        { currentUser ? 
+          <div>
+            <Link to="/">home</Link>
+            <Link to="/fish">fish</Link>
+            <Link to="/" onClick={handleLogout}>logout</Link>
+          </div> 
+        : null }
+      
       <Switch>
         <Route path="/fish">
           {fish.map((feesh) => (
