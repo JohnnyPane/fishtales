@@ -13,6 +13,7 @@ import Togglable from './components/Togglable'
 import FishForm from './components/FishForm'
 import SignupForm from './components/SignupForm'
 import User from './components/User'
+import Navbar from './components/Navbar';
 // import { param } from '../../server/controllers/users';
 
 const App = () => {
@@ -116,20 +117,15 @@ const App = () => {
     </Togglable>
   );
 
-  // const id  = useParams()
-  // console.log(id, "ID TOME")
-
   return (
     <div>
-      
-        { currentUser ? 
-          <div>
-            <Link to="/">home</Link>
-            <Link to="/fish">fish</Link>
-            <Link to="/" onClick={handleLogout}>logout</Link>
-          </div> 
-        : null }
-      
+      {currentUser ? (
+        <Navbar 
+          currentUser={currentUser}
+          handleLogout={handleLogout}
+        />
+      ) : null}
+
       <Switch>
         <Route path="/fish">
           {fish.map((feesh) => (
@@ -140,12 +136,12 @@ const App = () => {
           <Users />
         </Route> */}
         <Route path="/user/:id">
-          <User />
+          <User user={currentUser ? currentUser : null} />
         </Route>
         <Route path="/signup">
           {currentUser ? (
             <Redirect to={"/user/" + currentUserId} />
-          ) : ( 
+          ) : (
             <SignupForm
               username={username}
               password={password}
@@ -154,7 +150,7 @@ const App = () => {
               handlePasswordChange={({ target }) => setPassword(target.value)}
               handleEmailChange={({ target }) => setEmail(target.value)}
               handleSubmit={handleSignup}
-            /> 
+            />
           )}
         </Route>
         <Route path="/">
