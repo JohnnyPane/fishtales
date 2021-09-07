@@ -27,7 +27,12 @@ const App = () => {
 
   useEffect(() => {
     fishService.getAll().then(initialFish => {
-      setFish(initialFish)
+      // setFish(initialFish)
+      initialFish.map(async feesh => {
+        let owner = await userService.fetchUser(feesh.user)
+          feesh.user = owner
+          setFish(fish.concat(feesh))
+      })
     })
   }, [])
 
@@ -132,9 +137,6 @@ const App = () => {
             <Fish fish={feesh} />
           ))}
         </Route>
-        {/* <Route path="/users">
-          <Users />
-        </Route> */}
         <Route path="/user/:id">
           <User user={currentUser ? currentUser : null} />
         </Route>

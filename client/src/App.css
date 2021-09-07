@@ -11,8 +11,10 @@ button {
 
 .navbar {
   display: flex;
+  justify-content: flex-end;
   height: 54px;
   box-shadow: rgb(0 0 0 / 5%) 0px 3px 15px 0px;
+  margin-bottom: 30px;
 }
 
 .nav-avatar {
@@ -21,12 +23,12 @@ button {
   justify-content: center;
   width: 40px;
   cursor: pointer;
+  margin-right: 40px;
 }
 
 .navbar-nav {
   display: flex;
   justify-content: space-around;
-  width: 20%;
   align-items: center;
 }
 
@@ -157,4 +159,31 @@ button {
 .card-header-subtext {
   font-size: 12px;
   color: rgba(0, 0, 0, 0.54);
+}
+
+.user-home-info {
+  margin-left: 80px;
+}
+
+.user-home-header {
+  font-size: 28px;
+  line-height: 32px;
+  font-weight: 300;
+}
+
+.user-subheader-wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.user-subheader {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.user-subheader-stats {
+  font-weight: 400;
 }

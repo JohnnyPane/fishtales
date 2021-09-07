@@ -31,12 +31,6 @@ const Navbar = ({ currentUser, handleLogout }) => {
     right: false,
   });
 
-   const addFish = (fishObject) => {
-     fishService.create(fishObject).then((returnedFish) => {
-       setFish(fish.concat(returnedFish));
-     });
-   };
-
   const toggleDrawer = (anchor, open) => (event) => {
     if (
       event.type === "keydown" &&
@@ -48,14 +42,20 @@ const Navbar = ({ currentUser, handleLogout }) => {
     setState({ ...state, [anchor]: open });
   };
 
+   const addFish = (fishObject) => {
+     fishService.create(fishObject).then((returnedFish) => {
+       setFish(fish.concat(returnedFish));
+     });
+
+     setState({ ...state, bottom: false })
+   };
+
    const list = (anchor) => (
      <div
        className={clsx(classes.list, {
          [classes.fullList]: anchor === "top" || anchor === "bottom",
        })}
        role="presentation"
-      //  onClick={toggleDrawer(anchor, false)}
-      //  onKeyDown={toggleDrawer(anchor, false)}
      >
        <FishForm createFish={addFish} toggleDrawer={toggleDrawer}/>
      </div>

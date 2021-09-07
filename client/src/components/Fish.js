@@ -6,7 +6,6 @@ import CardContent from "@material-ui/core/CardContent";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
-import { spacing } from "@material-ui/system";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,13 +46,16 @@ const Fish = ({ fish, user }) => {
 
   return (
     <Card className={classes.root} my={20}>
-      <CardHeader
-        title={user.username}
+      {!user ? <CardHeader
+        title={user ? user.username : fish.user.username}
         subheader={fish.species}
         avatar={
-          <Avatar alt={user.username} src={user.image ? user.image : defaultAvatar} /> 
+          <Avatar
+            alt={user ? user.username : fish.user.username}
+            src={user && user.image ? user.image : fish.user.image ? fish.user.image : defaultAvatar}
+          />
         }
-      />
+      /> : null }
       <CardMedia
         className={classes.media}
         image={fish.image ? fish.image : defaultImage}
@@ -63,7 +65,7 @@ const Fish = ({ fish, user }) => {
         <Typography variant="body2" color="textPrimary" component="p">
           <div className="fish-card-header-wrapper">
             <div className="card-user-header">
-              <div>{user.username}</div>
+              <div>{user ? user.username : fish.user.username}</div>
               <div className="card-header-subtext">
                 {fish.date.slice(0, 10).split("-").reverse().join("-")}
               </div>

@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const FishForm = ({ createFish, toggleDrawer }) => {
+const FishForm = ({ createFish }) => {
     const [newFish, setNewFish] = useState({
         species: "",
         location: "",
@@ -39,18 +39,17 @@ const FishForm = ({ createFish, toggleDrawer }) => {
     };
 
     const addFish = (event) => {
-        event.preventDefault()
-        createFish(newFish)
-        toggleDrawer("bottom", false);
-        setNewFish({
-            species: "",
-            location: "",
-            length: "",
-            weight: "",
-            baitType: "",
-            temperature: "",
-            image: ""
-        })
+      event.preventDefault()
+      createFish(newFish)
+      setNewFish({
+          species: "",
+          location: "",
+          length: "",
+          weight: "",
+          baitType: "",
+          temperature: "",
+          image: ""
+      })
     }
 
     const uploadImageToS3 = (async (image) => {
@@ -83,16 +82,16 @@ const FishForm = ({ createFish, toggleDrawer }) => {
           <label className="fish-form-label fish-image-label">
             <div>
               Image
-              <br/>
+              <br />
               <div className="fish-form-image-subtext">Add an image</div>
             </div>
             <input
               className="fish-image-input"
               onChange={(event) => uploadImageToS3(event.target.files[0])}
               type="file"
+              accept="image/*"
             />
-            <Avatar src={fishImage} className={classes.large}>
-            </Avatar>
+            <Avatar src={fishImage} className={classes.large}></Avatar>
             {/* <img alt="upload a fish" src={fishImage} /> */}
           </label>
         </div>
@@ -146,11 +145,7 @@ const FishForm = ({ createFish, toggleDrawer }) => {
             placeholder="Temp in fahrenheit"
           />
         </label>
-        <button
-          type="submit"
-          onClick={addFish}
-          className="submit-fish-button"
-        >
+        <button type="submit" className="submit-fish-button">
           save
         </button>
       </form>
