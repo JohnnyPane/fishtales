@@ -26,20 +26,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const User = ({ user, fish }) => {
-  // const [fish, setFish] = useState([])
   const [selectedUser, setUser] = useState([])
-  const [imageFile, setFile] = useState('')
   const inputFile = useRef(null); 
 
   let userId = useParams().id
 
   useEffect(() => {
-    // fishService.getUsersFish(userId).then(usersFish => {
-    //   setFish(usersFish)
-    // })
-
-    console.log("USER EFFECT", selectedUser)
-
     if (!user) {
       userService.fetchUser(userId).then(user => {
         console.log(user, "HERE WITH USER")
@@ -67,21 +59,7 @@ const User = ({ user, fish }) => {
 
   const userSpecies = [...new Set(fish.map(feesh => feesh.species))]
 
-  // const addFish = (fishObject) => {
-  //   fishService.create(fishObject).then((returnedFish) => {
-  //     setFish(fish.concat(returnedFish));
-  //   });
-  // };
-
-  // const fishFormRef = useRef();
-
   const classes = useStyles();
-
-  // const fishForm = () => (
-  //   <Togglable buttonLabel="Add Fish" ref={fishFormRef}>
-  //     <FishForm createFish={addFish} />
-  //   </Togglable>
-  // );
 
   return (
     <div style={{display: "flex", flexDirection: "column"}}>

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Doughnut, PolarArea } from "react-chartjs-2";
+import FishStats from "./FishStats";
 
 const StatsPage = ({ fish }) => {
-  const [fishBySpecies, setCount] = useState(null)
+  const [fishBySpecies, setCount] = useState({})
   const [speciesCount, setSpeciesCount] = useState([])
   const [speciesPieData, setSpeciesPieData] = useState({
     labels: ["Red", "Blue", "Yellow"],
@@ -37,6 +38,7 @@ const StatsPage = ({ fish }) => {
     getSpeciesData(dummyData)
   }, [])
 
+
   const getSpeciesData = async (dummy) => {
     console.log(dummy)
     let counts = []
@@ -53,6 +55,7 @@ const StatsPage = ({ fish }) => {
         {
           label: "Fish Caught by Species",
           data: counts,
+          // NEED TO ADD COLOR ARRAY SOMEWHERE
           backgroundColor: [
             "rgb(255, 99, 132)",
             "rgb(54, 162, 235)",
@@ -64,48 +67,37 @@ const StatsPage = ({ fish }) => {
           hoverOffset: 4,
         },
       ],
+      options: {
+        legend: {
+          display: false,
+        }
+      },
     });
   }
 
-  function getRandomColor() {
-    var letters = "0123456789ABCDEF";
-    var color = "#";
-    for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
+  const generateFishStats = () => {
+     for (const [species, speciesArray] of Object.entries(speciesCount)) {
+      return (
+        <FishStats fish={speciesArray} />
+      )
     }
-    return color;
   }
-
-    
-  const colorRandomizer = (array) => {
-    let colors = []
-    array.forEach(entry => {
-      colors.push(getRandomColor())
-    })
-  }
-
-  // let speciesPiedata = {
-  //   labels: getSpeciesData(getSpeciesData(0)),
-  //   datasets: [
-  //     {
-  //       label: "My First Dataset",
-  //       data: [1, 2, 3],
-  //       backgroundColor: colorRandomizer([1, 2, 3]),
-  //       hoverOffset: 4,
-  //     },
-  //   ],
-  // };
-
-  // const speciesPieconfig = {
-  //   type: "doughnut",
-  //   data: speciesPiedata,
-  // };
 
   return (
     <div>
       <div className="user-overview-charts-wrapper">
-        <Doughnut data={speciesPieData} />
+        <div className="fish-by-species-wrapper">
+          <Doughnut
+            data={speciesPieData}
+            options={{
+              legend: { display: false },
+            }}
+          />
+        </div>
       </div>
+      {Object.keys(fishBySpecies).map(species => (
+        <FishStats fish={fishBySpecies[species]} />
+      ))}
     </div>
   );
 };

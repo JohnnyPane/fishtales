@@ -190,5 +190,10 @@ button {
 
 /* STATS PAGE  */
 .user-overview-charts-wrapper {
-  
+  display: flex;
+  justify-content: center;
+}
+
+.fish-by-species-wrapper {
+  width: 375px;
 }
