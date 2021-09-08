@@ -12,11 +12,11 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 500,
     boxShadow: "rgb(0 0 0 / 5%) 0px 3px 15px 0px",
     margin: "20px 0",
-    width: "100%"
+    width: 320
   },
   media: {
     height: 0,
-    paddingTop: "56.25%", // 16:9
+    paddingTop: "100%", // 16:9
   },
   small: {
     width: theme.spacing(4),
@@ -38,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const defaultImage = "https://images.unsplash.com/photo-1485452499676-62ab02c20e83?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
-const defaultAvatar = "https://images.unsplash.com/photo-1532015917327-c7c46aa1d930?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1036&q=80"
 
 const Fish = ({ fish, user }) => {
 
@@ -52,7 +51,7 @@ const Fish = ({ fish, user }) => {
         avatar={
           <Avatar
             alt={user ? user.username : fish.user.username}
-            src={user && user.image ? user.image : fish.user.image ? fish.user.image : defaultAvatar}
+            src={user && user.image ? user.image : fish.user.image ? fish.user.image : null}
           />
         }
       /> : null }

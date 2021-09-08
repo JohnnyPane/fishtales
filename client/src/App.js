@@ -1,7 +1,7 @@
 import './App.css';
 import {
   BrowserRouter as Router, 
-  Switch, Route, Link, useRouteMatch, useHistory, Redirect
+  Switch, Route, Redirect
 } from 'react-router-dom'
 import React, { useState, useEffect, useRef } from 'react'
 import loginService from "./services/login"
@@ -9,10 +9,9 @@ import userService from './services/user'
 import fishService from "./services/fish"
 import Fish from './components/Fish'
 import LoginForm from './components/LoginForm'
-import Togglable from './components/Togglable'
-import FishForm from './components/FishForm'
 import SignupForm from './components/SignupForm'
 import User from './components/User'
+import StatsPage from './components/StatsPage'
 import Navbar from './components/Navbar';
 // import { param } from '../../server/controllers/users';
 
@@ -24,33 +23,67 @@ const App = () => {
   const [currentUserId, setUserId] = useState('')
   const [currentUser, setUser] = useState(null)
   const [fish, setFish] = useState([])
+  const [userFish, setUserFish] = useState([])
+  const [drawerState, setDrawerState] = useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
+  });
 
   useEffect(() => {
-    fishService.getAll().then(initialFish => {
-      // setFish(initialFish)
-      initialFish.map(async feesh => {
-        let owner = await userService.fetchUser(feesh.user)
-          feesh.user = owner
-          setFish(fish.concat(feesh))
-      })
-    })
+    // fishService.getAll().then(initialFish => {
+    //   // setFish(initialFish)
+    //   initialFish.map(async feesh => {
+    //     let owner = await userService.fetchUser(feesh.user)
+    //       feesh.user = owner
+    //       setFish(fish.concat(feesh))
+    //   })
+    // })
+     const currentUserJSON = window.localStorage.getItem("currentUser");
+     if (currentUserJSON) {
+       const user = JSON.parse(currentUserJSON);
+       setUser(user);
+       setUserId(user.id);
+       fishService.setToken(user.token);
+
+       fishService.getUsersFish(user.id).then((usersFish) => {
+         setUserFish(usersFish);
+       });
+     }
+
   }, [])
 
-  useEffect(() => {
-    const currentUserJSON = window.localStorage.getItem("currentUser")
-    if (currentUserJSON) {
-      const user = JSON.parse(currentUserJSON)
-      setUser(user)
-      setUserId(user.id)
-      fishService.setToken(user.token)
-    }
-  }, [])
+    const toggleDrawer = (anchor, open) => (event) => {
+      if (
+        event.type === "keydown" &&
+        (event.key === "Tab" || event.key === "Shift")
+      ) {
+        return;
+      }
+
+      setDrawerState({ ...drawerState, [anchor]: open });
+    };
+
+
+  // useEffect(() => {
+  //   const currentUserJSON = window.localStorage.getItem("currentUser")
+  //   if (currentUserJSON) {
+  //     const user = JSON.parse(currentUserJSON)
+  //     setUser(user)
+  //     setUserId(user.id)
+  //     fishService.setToken(user.token)
+  //   }
+  // }, [])
 
   const addFish = (fishObject) => {
-    // fishFormRef.current.toggleVisibility()
+    // JUST ADD USER FISH FOR NOW
     fishService.create(fishObject).then((returnedFish) => {
-      setFish(fish.concat(returnedFish));
+      setUserFish(userFish.concat(returnedFish))
+      // setFish(fish.concat(returnedFish));
     });
+
+    setDrawerState("bottom", false)
   };
 
   const handleLogin = async (event) => {
@@ -105,22 +138,22 @@ const App = () => {
     setEmail("");
   }
 
-  const loginForm = () => (
-    <Togglable buttonLabel="Log in">
-      <LoginForm
+  // const loginForm = () => (
+  //   <Togglable buttonLabel="Log in">
+  //     <LoginForm
      
-      />
-      <button onClick={() => setLoginVisible(false)}>cancel</button>
-    </Togglable>
-  );
+  //     />
+  //     <button onClick={() => setLoginVisible(false)}>cancel</button>
+  //   </Togglable>
+  // );
 
-  const fishFormRef = useRef()
+  // const fishFormRef = useRef()
 
-  const fishForm = () => (
-    <Togglable buttonLabel="Add Fish" ref={fishFormRef}>
-      <FishForm createFish={addFish} />
-    </Togglable>
-  );
+  // const fishForm = () => (
+  //   <Togglable buttonLabel="Add Fish" ref={fishFormRef}>
+  //     <FishForm createFish={addFish} />
+  //   </Togglable>
+  // );
 
   return (
     <div>
@@ -128,6 +161,9 @@ const App = () => {
         <Navbar 
           currentUser={currentUser}
           handleLogout={handleLogout}
+          addFish={addFish}
+          toggleDrawer={toggleDrawer}
+          drawerState={drawerState}
         />
       ) : null}
 
@@ -137,8 +173,11 @@ const App = () => {
             <Fish fish={feesh} />
           ))}
         </Route>
+        <Route path="/user/:id/stats">
+            <StatsPage fish={userFish} />
+        </Route>
         <Route path="/user/:id">
-          <User user={currentUser ? currentUser : null} />
+          <User user={currentUser ? currentUser : null} fish={userFish} />
         </Route>
         <Route path="/signup">
           {currentUser ? (

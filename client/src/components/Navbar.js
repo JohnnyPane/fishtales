@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from 'react-router-dom'
 import Avatar from "@material-ui/core/Avatar";
 import { makeStyles } from "@material-ui/core/styles";
@@ -8,7 +8,6 @@ import Button from "@material-ui/core/Button";
 import clsx from "clsx";
 import Drawer from "@material-ui/core/Drawer";
 import FishForm from "./FishForm";
-import fishService from "../services/fish";
 
 const useStyles = makeStyles((theme) => ({
   small: {
@@ -21,34 +20,17 @@ const defaultAvatar =
   "https://images.unsplash.com/photo-1532015917327-c7c46aa1d930?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1036&q=80";
 
 
-const Navbar = ({ currentUser, handleLogout }) => {
+const Navbar = ({ currentUser, handleLogout, addFish, toggleDrawer, drawerState }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [fish, setFish] = useState([]);
-  const [state, setState] = useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
-  });
+  // const [fish, setFish] = useState([]);
+  
+  //  const addFish = (fishObject) => {
+  //    fishService.create(fishObject).then((returnedFish) => {
+  //      setFish(fish.concat(returnedFish));
+  //    });
 
-  const toggleDrawer = (anchor, open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-
-    setState({ ...state, [anchor]: open });
-  };
-
-   const addFish = (fishObject) => {
-     fishService.create(fishObject).then((returnedFish) => {
-       setFish(fish.concat(returnedFish));
-     });
-
-     setState({ ...state, bottom: false })
-   };
+  //    setState({ ...state, bottom: false })
+  //  };
 
    const list = (anchor) => (
      <div
@@ -57,7 +39,7 @@ const Navbar = ({ currentUser, handleLogout }) => {
        })}
        role="presentation"
      >
-       <FishForm createFish={addFish} toggleDrawer={toggleDrawer}/>
+       <FishForm createFish={addFish} />
      </div>
    );
 
@@ -81,7 +63,7 @@ const Navbar = ({ currentUser, handleLogout }) => {
             </Button>
             <Drawer
               anchor="bottom"
-              open={state["bottom"]}
+              open={drawerState["bottom"]}
               onClose={toggleDrawer("bottom", false)}
             >
               {list("bottom")}
@@ -108,7 +90,7 @@ const Navbar = ({ currentUser, handleLogout }) => {
         open={Boolean(anchorEl)}
         onClose={handleAnchorClose}
         getContentAnchorEl={null}
-        anchorOrigin={{ vertical: "bottom", horizontal: "" }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center"}}
         transformOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <MenuItem onClick={handleAnchorClose}>
@@ -116,6 +98,9 @@ const Navbar = ({ currentUser, handleLogout }) => {
         </MenuItem>
         <MenuItem onClick={handleAnchorClose}>
           <Link to="/fish">Feed</Link>
+        </MenuItem>
+        <MenuItem onClick={handleAnchorClose}>
+          <Link to={"/user/" + currentUser.id + "/stats"}>Stats</Link>
         </MenuItem>
         <MenuItem onClick={handleLogout}>
           {" "}

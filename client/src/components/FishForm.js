@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import fishService from "../services/fish";
 import { uploadImage } from "../services/s3";
 import Avatar from "@material-ui/core/Avatar";
 import { makeStyles } from "@material-ui/core/styles";

@@ -26,8 +26,8 @@ usersRouter.get("/", async (request, response) => {
 });
 
 usersRouter.get("/:id", async (request, response) => {
-  const users = await User.findById(request.params.id);
-  response.json(users);
+  const user = await User.findById(request.params.id);
+  response.json(user);
 });
 
 usersRouter.put("/:id", async (request, response, next) => {
