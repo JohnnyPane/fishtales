@@ -10,4 +10,10 @@ const fetchUser = async (userId) => {
   const user = await axios.get(baseUrl + "/" + userId);
   return user.data
 }
-export default { signup, fetchUser };
+
+const updateUser = (id, newObject) => {
+  const request = axios.put(`${baseUrl}/${id}`, newObject);
+  return request.then((response) => response.data);
+};
+
+export default { signup, fetchUser, updateUser };

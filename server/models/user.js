@@ -10,7 +10,8 @@ const userSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Fish'
     }
-  ]
+  ],
+  image: String
 });
 
 // userSchema.plugin(uniqueValidator);

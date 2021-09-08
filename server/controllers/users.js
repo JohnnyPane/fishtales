@@ -30,5 +30,17 @@ usersRouter.get("/:id", async (request, response) => {
   response.json(users);
 });
 
+usersRouter.put("/:id", async (request, response, next) => {
+  const body = request.body;
+  const user = {
+    image: body.image
+  }
+
+  User.findByIdAndUpdate(request.params.id, user).then((updatedUser) => {
+    response.json(updatedUser.toJSON());
+  })
+  .catch((error) => next(error))
+})
+
 
 module.exports = usersRouter;

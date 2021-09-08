@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom'
 import Avatar from "@material-ui/core/Avatar";
 import Box from "@material-ui/core/Box";
 import { makeStyles } from "@material-ui/core/styles";
+import { uploadImage } from "../services/s3";
 
 const defaultAvatar =
   "https://images.unsplash.com/photo-1532015917327-c7c46aa1d930?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1036&q=80";
@@ -33,6 +34,8 @@ const useStyles = makeStyles((theme) => ({
 const User = ({ user }) => {
   const [fish, setFish] = useState([])
   const [selectedUser, setUser] = useState([])
+  const [imageFile, setFile] = useState('')
+  const inputFile = useRef(null); 
 
   let userId = useParams().id
 
@@ -50,6 +53,20 @@ const User = ({ user }) => {
     }
   }, [])
 
+  // NEED TO FIX FOR JUST CURRENT USER
+    const uploadImageToS3 = async (image) => {
+      if (image) {
+        let returnedImage = await uploadImage(image);
+        let imageUrl = returnedImage.location.toString();
+        setUser((selectedUser) => ({
+          ...selectedUser,
+          image: imageUrl,
+        }))
+
+        userService.updateUser(selectedUser.id, {image: imageUrl});
+      }
+
+    };
 
   const userSpecies = [...new Set(fish.map(feesh => feesh.species))]
 
@@ -73,7 +90,8 @@ const User = ({ user }) => {
   return (
     <div style={{display: "flex", "flex-direction": "column"}}>
       <Box className={classes.box}>
-        <Avatar className={classes.large} alt={selectedUser.username} src={selectedUser.image ? selectedUser.image : defaultAvatar} />
+        <Avatar style={{ cursor: "pointer" }}className={classes.large} alt={selectedUser.username} src={selectedUser.image ? selectedUser.image : null} onClick={() => inputFile.current.click()} />
+        <input type='file' id='file' ref={inputFile} style={{display: 'none'}} onChange={(event) => uploadImageToS3(event.target.files[0])}/>
         <div className="user-home-info">
           <div className="user-home-header">{ selectedUser.username }</div>
           <div className="user-subheader-wrapper">
