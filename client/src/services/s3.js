@@ -10,7 +10,6 @@ const config = {
 
 
 async function uploadImage(image) {
-  console.log(config, process.env, 'CONFIG')
   let uploadedImage = await S3FileUpload.uploadFile(image, config);
   return uploadedImage;
 }

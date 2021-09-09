@@ -39,7 +39,6 @@ const User = ({ user, fish }) => {
   useEffect(() => {
     if (!user) {
       userService.fetchUser(userId).then(user => {
-        console.log(user, "HERE WITH USER")
         setUser(user)
       })
     } else {

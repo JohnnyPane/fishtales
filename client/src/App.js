@@ -89,7 +89,6 @@ const App = () => {
   const handleLogin = async (event) => {
     event.preventDefault()
 
-    console.log("login time")
     try {
       const user = await loginService.login({
         username, password
@@ -114,7 +113,6 @@ const App = () => {
   const handleSignup = async (event) => {
      event.preventDefault();
      try {
-        console.log("SGINING")
         await userService.signup({
           username,
           password,
@@ -129,7 +127,6 @@ const App = () => {
 
   const handleLogout = async (event) => {
     // event.preventDefault()
-    console.log("Logout")
     window.localStorage.removeItem("currentUser");
     setUser(null)
     setUserId("")

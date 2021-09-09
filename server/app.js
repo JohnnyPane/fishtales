@@ -30,10 +30,6 @@ mongoose
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 // All other GET requests not handled before will return our React app
-// app.get('*', (req, res) => {
-//   res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
-// });
-
 
 app.use(cors());
 app.use(express.static("build"));
@@ -46,5 +42,9 @@ app.use("/api/fish", fishRouter)
 
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
+
+// app.get("/*", (req, res) => {
+//   res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
+// });
 
 module.exports = app;

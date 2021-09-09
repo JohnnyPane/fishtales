@@ -54,7 +54,6 @@ const FishForm = ({ createFish }) => {
       if (image){
         const objectUrl = URL.createObjectURL(image);
         setImage(objectUrl);
-        console.log(image, "here with image");
         let returnedImage = await uploadImage(image);
         let imageUrl = returnedImage.location.toString();
         setNewFish((newFish) => ({

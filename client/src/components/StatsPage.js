@@ -27,7 +27,7 @@ const StatsPage = ({ fish }) => {
       labels.push(fish[0]);
       counts.push(fish[1].length);
     });
-    console.log(counts, labels)
+
     setSpeciesPieData({
       ...setSpeciesPieData,
       labels: labels,
