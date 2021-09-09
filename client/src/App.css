@@ -142,6 +142,7 @@ button {
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  margin-top: 30px;
 }
 
 .fish-card-header-wrapper {

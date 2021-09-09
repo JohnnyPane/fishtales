@@ -4,10 +4,15 @@ import Fish from "./Fish";
 import { useParams } from 'react-router-dom'
 import Avatar from "@material-ui/core/Avatar";
 import Box from "@material-ui/core/Box";
+import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import { uploadImage } from "../services/s3";
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    width: "80%"
+  },
   large: {
     width: theme.spacing(13),
     height: theme.spacing(13),
@@ -21,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     borderBottom: "1px solid rgb(219,219,219)",
-    paddingBottom: "30px"
+    paddingBottom: "30px",
   },
 }));
 
@@ -75,11 +80,12 @@ const User = ({ user, fish }) => {
         </div>
       </Box>
       <div className="user-fish-wrapper">
-        {fish.map((feesh) => (
-          <Fish key={feesh.id} fish={feesh} user={selectedUser} />
-        ))}
-
-        {/* {fishForm()} */}
+        <Grid container spacing={1} style={{width: "80%"}}>
+          {fish.map((feesh) => (
+            <Fish key={feesh.id} fish={feesh} user={selectedUser} />
+          ))}
+        </Grid>
+        
       </div>
     </div>
   );
