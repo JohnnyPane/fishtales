@@ -4,22 +4,8 @@ import FishStats from "./FishStats";
 
 const StatsPage = ({ fish }) => {
   const [fishBySpecies, setCount] = useState({})
-  const [speciesCount, setSpeciesCount] = useState([])
-  const [speciesPieData, setSpeciesPieData] = useState({
-    labels: ["Red", "Blue", "Yellow"],
-    datasets: [
-      {
-        label: "Fish",
-        data: [30, 50, 100],
-        backgroundColor: [
-          "rgb(255, 99, 132)",
-          "rgb(54, 162, 235)",
-          "rgb(255, 205, 86)",
-        ],
-        hoverOffset: 4,
-      },
-    ],
-  });
+  // const [speciesCount, setSpeciesCount] = useState([])
+  const [speciesPieData, setSpeciesPieData] = useState({});
 
   useEffect(() => {
     let fishSpecies = {};
@@ -29,24 +15,18 @@ const StatsPage = ({ fish }) => {
       fishSpecies[feesh.species] = fishSpecies[feesh.species].concat(feesh)
     })
 
-    let dummyData = []
-    for (const [species, speciesArray] of Object.entries(fishSpecies)) {
-      setSpeciesCount(speciesCount.concat([species, speciesArray.length]))
-      dummyData.push([species, speciesArray.length]);
-    }
     setCount(fishSpecies)
-    getSpeciesData(dummyData)
+    getSpeciesData(fishSpecies)
   }, [])
 
 
-  const getSpeciesData = async (dummy) => {
-    console.log(dummy)
+  const getSpeciesData = async (species) => {
     let counts = []
     let labels = []
-    dummy.forEach(species => {
-      counts.push(species[1])
-      labels.push(species[0])
-    })
+    Object.entries(species).map((fish) => {
+      labels.push(fish[0]);
+      counts.push(fish[1].length);
+    });
     console.log(counts, labels)
     setSpeciesPieData({
       ...setSpeciesPieData,
@@ -70,17 +50,12 @@ const StatsPage = ({ fish }) => {
       options: {
         legend: {
           display: false,
+        },
+        title: {
+          text: "Bait Types"
         }
       },
     });
-  }
-
-  const generateFishStats = () => {
-     for (const [species, speciesArray] of Object.entries(speciesCount)) {
-      return (
-        <FishStats fish={speciesArray} />
-      )
-    }
   }
 
   return (
@@ -95,9 +70,11 @@ const StatsPage = ({ fish }) => {
           />
         </div>
       </div>
-      {Object.keys(fishBySpecies).map(species => (
-        <FishStats fish={fishBySpecies[species]} />
-      ))}
+      <div style={{marginTop: 30, display: "flex", alignItems: "center", flexDirection: "column"}}>
+        {Object.keys(fishBySpecies).map((species) => (
+          <FishStats fish={fishBySpecies[species]} />
+        ))}
+      </div>
     </div>
   );
 };

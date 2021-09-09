@@ -7,6 +7,12 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "@vx/gradient": "0.0.199",
+    "@vx/group": "0.0.199",
+    "@vx/mock-data": "0.0.199",
+    "@vx/responsive": "0.0.199",
+    "@vx/scale": "0.0.199",
+    "@vx/shape": "0.0.199",
     "axios": "^0.21.1",
     "chart.js": "^3.5.1",
     "dotenv": "^10.0.0",
@@ -42,5 +48,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:3001"
+  "proxy": "http://localhost:3001",
+  "devDependencies": {
+    "typescript": "^4.4.2"
+  }
 }
